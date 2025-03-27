@@ -33,20 +33,20 @@ class PowerWalkerEthernet(object):
 
         lines = []
         for line in raw_lines:
-            if line.strip():
-                lines.append(line.strip())
+            # if line.strip():
+            lines.append(line.strip())
 
-        nominal_input = int(lines[4][0:3])
-        nominal_output = int(lines[4][4:])
+        nominal_input = int(lines[7][0:3])
+        nominal_output = int(lines[7][4:])
         values = {
-            'model': lines[2],
-            'version': lines[6],
+            'model': lines[5],
+            'version': lines[9],
             'nominal_input_voltage': nominal_input,
             'nominal_output_voltage': nominal_output,
-            'nominal_output_frequency': int(lines[10]) / 10.0,
-            'rated_battery_voltage': int(lines[12]) / 10.0,
-            'rated_va': int(lines[8]),
-            'rated_output_current': int(lines[11]) / 10.0,
+            'nominal_output_frequency': int(lines[13]) / 10.0,
+            'rated_battery_voltage': int(lines[15]) / 10.0,
+            'rated_va': int(lines[11]),
+            'rated_output_current': int(lines[14]) / 10.0,
         }
         return values
 
@@ -76,25 +76,25 @@ class PowerWalkerEthernet(object):
 
         lines = []
         for line in raw_lines:
-            if line.strip():
-                lines.append(line.strip())
+            # if line.strip():
+            lines.append(line.strip())
 
         status = []  # TODO!
-        if not lines[1] == 'Line Mode':
+        if lines[1] != 'Line Mode':
             status.append('Utility Fail')  # Compatibility with serial interface
 
         values = {
-            'input_voltage': int(lines[12]) / 10.0,
-            'output_voltage': int(lines[15]) / 10.0,
-            'output_current': int(lines[35]) / 10.0,
-            'input_frequency': int(lines[11]) / 10.0,
-            'battery_voltage': int(lines[8]) / 10.0,
-            'temperature': int(lines[2]) / 10.0,
+            'input_voltage': int(lines[17]) / 10.0,
+            'output_voltage': int(lines[20]) / 10.0,
+            'output_current': int(lines[40]) / 10.0,
+            'input_frequency': int(lines[16]) / 10.0,
+            'battery_voltage': int(lines[13]) / 10.0,
+            'temperature': int(lines[7]) / 10.0,
             'status': status,
-            'battery_capacity': int(lines[9]),
-            'remaining_battery': lines[10],  # minutes
-            'output_frequency': int(lines[14]) / 10.0,
-            'load_level': int(lines[17]),
+            'battery_capacity': int(lines[14]),
+            'remaining_battery': lines[15],
+            'output_frequency': int(lines[19]) / 10.0,
+            'load_level': int(lines[22]),
         }
         # WARNING (appears in web front-end - find how to read)
         # FAULT (appears in web front-end - find how to read)
